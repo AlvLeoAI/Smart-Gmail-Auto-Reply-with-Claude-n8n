@@ -1,0 +1,800 @@
+{
+  "name": "Data Tables",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        992,
+        80
+      ],
+      "id": "82e70763-6146-45af-8012-ccba6981cb70",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1163789431,
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1328,
+        80
+      ],
+      "id": "7d39ecfc-a300-425c-a819-2531d6bd9c03",
+      "name": "Get Contacts",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.Name }}",
+            "Email": "={{ $json.Email }}",
+            "Phone_Number": "={{ $json.PhoneNumber }}",
+            "Notes": "={{ $json.Notes }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone_Number",
+              "displayName": "Phone_Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        80
+      ],
+      "id": "0d5d09b5-db58-4edf-acea-6d18bbee4e67",
+      "name": "Insert Contacts"
+    },
+    {
+      "parameters": {
+        "content": "## From Sheets to Data Table\n",
+        "height": 288,
+        "width": 992,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ],
+      "id": "e1187490-18e3-418e-ad35-2f1b99d605ae",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        912,
+        384
+      ],
+      "id": "dcca3203-3301-4969-978c-6371044d9726",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Contacts",
+          "cachedResultUrl": ""
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "=Email",
+              "keyValue": "={{ $json.from.value[0].address }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        384
+      ],
+      "id": "fa94aa62-5798-450a-a8cd-e86f40aec9c7",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "content": "## Contact Lookup\n",
+        "height": 416,
+        "width": 992,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        288
+      ],
+      "id": "5bc0b245-9809-44ff-b566-f4bada5a2ee4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Inserting Sales Data\n",
+        "height": 288,
+        "width": 960,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        0
+      ],
+      "id": "12d545c4-b3cc-4d54-88c7-b5e010320326",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales Data",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 649841817,
+          "mode": "list",
+          "cachedResultName": "",
+          "cachedResultUrl": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2192,
+        80
+      ],
+      "id": "d389bc8f-8330-4e70-855f-e90feca79c98",
+      "name": "Get Sales Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ProductName": "={{ $json[\"Product Name\"] }}",
+            "DateSold": "={{ $json[\"Date Sold\"] }}",
+            "Price": "={{ $json.Price }}",
+            "QuantitySold": "={{ $json[\"Quantity Sold\"] }}",
+            "ProductID": "={{ $json[\"Product ID\"] }}",
+            "TotalRevenue": "={{ $json[\"Total Revenue\"] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ProductName",
+              "displayName": "ProductName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "DateSold",
+              "displayName": "DateSold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "QuantitySold",
+              "displayName": "QuantitySold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ProductID",
+              "displayName": "ProductID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "TotalRevenue",
+              "displayName": "TotalRevenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        80
+      ],
+      "id": "4c3db173-7b22-4b1e-a168-c3557328835f",
+      "name": "Insert Sales Data"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        1968,
+        368
+      ],
+      "id": "2cad2a97-06c7-4d03-8f9f-894e04585cf6",
+      "name": "When chat message received",
+      "webhookId": ""
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": ""
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "ProductName",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2288,
+        576
+      ],
+      "id": "9c26d865-9d36-47ab-89dd-cb8c6c85590b",
+      "name": "Product Name Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": ""
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "DateSold",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2448,
+        576
+      ],
+      "id": "eb3a046b-203e-4995-a025-5e1380d0d87f",
+      "name": "Date Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": ""
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "ProductID",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2592,
+        576
+      ],
+      "id": "0edd8a41-7775-40d8-b41f-090f02b2f587",
+      "name": "Product ID Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "",
+          "mode": "list",
+          "cachedResultName": "Sales",
+          "cachedResultUrl": ""
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2128,
+        576
+      ],
+      "id": "cb7d2128-3cf1-499a-9116-5d810def557d",
+      "name": "All Rows"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        576
+      ],
+      "id": "d2cb10f2-8bda-48ae-b934-99cb0b943996",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=# Overview\nYou are **Master Sales Data Analyst AI**, an expert in analyzing sales data and answering user queries with precision.  \nYou have access to the following tools:\n\n1. **AllRows** – returns all rows in the sales database.  \n2. **ProductNameQuery** – returns rows filtered by product name.  \n   - Valid product names: *Wireless Headphones*, *Bluetooth Speaker*, *Phone Case*.  \n3. **DateQuery** – returns rows filtered by a specific date.  \n   - Date format: `YYYY-MM-DD` (e.g., `2025-09-15`).  \n4. **ProductIDQuery** – returns rows filtered by product ID.  \n   - Valid IDs: *WH001* (Wireless Headphones), *BS002* (Bluetooth Speaker), *PC003* (Phone Case).  \n5. **Calculator** – use this whenever you need to perform math operations (e.g., sum, averages, totals, percentages). Never attempt math manually.\n\n---\n\n### Core Instructions:\n- Always **use the most specific tool** available for the user’s query.  \n  - If the query references a product name → use `ProductNameQuery`.  \n  - If the query references a product ID → use `ProductIDQuery`.  \n  - If the query references a date → use `DateQuery`.  \n  - If multiple filters are implied (e.g., “How many Wireless Headphones were sold on 2025-09-15?”), combine multiple queries logically by calling the relevant tools in sequence.  \n  - If no filter is given, or you need to explore broadly, use `AllRows`.  \n- If calculations are required (sums, averages, revenues, comparisons, etc.), **always send the data to the Calculator tool**.  \n- Never assume values—always confirm by retrieving data through the tools.  \n- Be concise, clear, and professional in your explanations.\n\n---\n\n### Example Behaviors:\n- **User**: “How many Wireless Headphones were sold on 2025-09-15?”  \n  - Use `ProductNameQuery` for Wireless Headphones.  \n  - Then filter with `DateQuery` for 2025-09-15.  \n  - Send results to **Calculator** to sum quantities.  \n  - Return the answer with explanation.\n\n- **User**: “What’s the total revenue for product ID BS002?”  \n  - Use `ProductIDQuery` for BS002.  \n  - Multiply *price × quantity* via **Calculator**.  \n  - Provide total revenue.\n\n- **User**: “Show me all sales.”  \n  - Use `AllRows` and return the dataset.\n\n---\n\n### Your Mission:\nYou are the ultimate sales analyst.  \nAnswer questions with precision, use the right tool every time, and provide clear explanations of how results were derived.  \nAlways confirm with data before performing analysis.  \nCurrent date/time: {{ $now }}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2208,
+        368
+      ],
+      "id": "67f1f3f9-4ffa-4907-9c6c-ca64fa6ac56e",
+      "name": "Sales Data Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Sales Agent\n",
+        "height": 416,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1872,
+        288
+      ],
+      "id": "f28f0f09-c436-4607-8014-fefef43edc7b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "# Setup Guide  \n**Author:** Alvaro\n\n> **Note:** This feature will be releasing in the afternoon of **Monday, September 22**.  \n> If you don't yet see the **Data Tables**, just wait for the official announcement and make sure your instance of n8n is updated to the latest version.\n\n\n---\n\n### Scenario 1: Sync Google Sheet → n8n Table (Contacts)  \n1. **Create** Contacts Google Sheet.  \n2. **Create a new n8n table** with the *same columns* as the sheet.  \n3. Hook up the **Get Contacts** node to the copied Google Sheet.  \n4. Test the workflow and confirm the contacts are pulled into your n8n table.\n\n---\n\n### Scenario 2: Analyze Sales Data with AI Agent  \n1. **Create** Sales Data Google Sheet  \n2. **Create a new n8n table** with matching columns.  \n3. Set up your workflow to **write sales data into the n8n table**.  \n4. Enable the **AI Agent** to analyze the data and check for accuracy.\n\n---\n\n",
+        "height": 704,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        464,
+        0
+      ],
+      "id": "42b87f02-1e1e-46dd-b9ca-cfe3dca0b052",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Gmail Trigger').item.json.from.text }}",
+        "subject": "={{ $json.subject }}",
+        "message": "={{ $json.body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1696,
+        384
+      ],
+      "id": "af38dd0f-c7b4-4b92-9e7c-0846408b4259",
+      "name": "Send a message",
+      "webhookId": "",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "",
+          "name": ""
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "python",
+        "pythonCode": "import re\n\ntext = items[0]['json']['content'][0]['text']\n\ndef parse_email(text):\n    # Extraer subject\n    subject_match = re.search(r'Subject:\\s*(.+?)(?:\\n|$)', text, re.IGNORECASE)\n    subject = subject_match.group(1).strip() if subject_match else \"\"\n    \n    # Extraer body HTML\n    html_match = re.search(r'HTML_BODY_START\\s*(.*?)\\s*HTML_BODY_END', text, re.DOTALL | re.IGNORECASE)\n    \n    if html_match:\n        body = html_match.group(1).strip()\n        body_type = 'html'\n    else:\n        # Si no hay HTML, buscar body normal después del subject\n        subject_end = subject_match.end() if subject_match else 0\n        body = text[subject_end:].strip()\n        # Convertir saltos de línea a <br> para Gmail\n        body = body.replace('\\n\\n', '</p><p>').replace('\\n', '<br>')\n        body = f'<p>{body}</p>'\n        body_type = 'text'\n    \n    return {\n        'subject': subject,\n        'body': body,\n        'body_type': body_type\n    }\n\nresult = parse_email(text)\n\nreturn {\n    'json': {\n        'subject': result['subject'],\n        'body': result['body'],\n        'body_type': result['body_type']\n    }\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        384
+      ],
+      "id": "5e15ca57-d959-4e71-ab14-1b470f63fd32",
+      "name": "Code in Python (Beta)"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "claude-sonnet-4-5-20250929",
+          "mode": "list",
+          "cachedResultName": "claude-sonnet-4-5-20250929"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an AI assistant helping to write professional email responses.\n\nCreate a well-formatted HTML email response based on the customer information and received email.\n\nCustomer Data:\n1-Name: {{ $json.Name }}\n\n2-Notes: {{ $json.Notes }}\n\nReceived Email:\n1-Email Subject: {{ $('Gmail Trigger').item.json.headers.subject }}\n\n2-Email Body: {{ $('Gmail Trigger').item.json.text }}\n\nCRITICAL: Your response MUST follow this EXACT format:\n\nSubject: [Your subject line]\n\nHTML_BODY_START\n<p>Hi [Name],</p>\n\n<p>[First paragraph with warm acknowledgment]</p>\n\n<p>[Main content addressing their needs]</p>\n\n<p>[Next steps or questions]</p>\n\n<p>Best regards,<br>\nAlvaro</p>\nHTML_BODY_END\n\nRules:\n- Use <p> tags for paragraphs\n- Use <br> for line breaks\n- Keep it clean and professional\n- The HTML_BODY_START and HTML_BODY_END markers are REQUIRED\n\n"
+            }
+          ]
+        },
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.anthropic",
+      "typeVersion": 1,
+      "position": [
+        1216,
+        384
+      ],
+      "id": "04f2da01-6aa3-406a-bf6c-1eba76b7159d",
+      "name": "Message a model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "anthropic/claude-sonnet-4.5",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1968,
+        576
+      ],
+      "id": "89e86318-6855-446d-9ac7-0877bba91f81",
+      "name": "Claude-Sonnet-4.5",
+      "credentials": {
+        "openRouterApi": {
+          "id": "",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Contacts": {
+      "main": [
+        [
+          {
+            "node": "Insert Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sales Data": {
+      "main": [
+        [
+          {
+            "node": "Insert Sales Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Name Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product ID Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Rows": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Beta)": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Beta)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Claude-Sonnet-4.5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": ""
+  },
+  "id": "",
+  "tags": []
+}
